@@ -1,0 +1,5 @@
+C:/Users/Griffin/dlib/examples/build/CMakeFiles/Strawberryizer.dir
+C:/Users/Griffin/dlib/examples/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Griffin/dlib/examples/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Griffin/dlib/examples/build/dlib_build/CMakeFiles/dlib.dir
+C:/Users/Griffin/dlib/examples/build/dlib_build/CMakeFiles/ALL_BUILD.dir

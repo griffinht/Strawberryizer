@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7E99B169-A76F-3A10-BC9B-B38F98F9E2C4}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>dlib</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">dlib.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">dlib19.21.0_debug_64bit_msvc1924</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">dlib.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">dlib19.21.0_release_64bit_msvc1924</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">dlib.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">dlib19.21.0_minsizerel_64bit_msvc1924</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">dlib.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">dlib19.21.0_relwithdebinfo_64bit_msvc1924</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DLIB_HAVE_SSE2;DLIB_JPEG_SUPPORT;DLIB_PNG_SUPPORT;DLIB_JPEG_STATIC;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\external\libpng;C:\Users\Griffin\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Griffin\dlib\dlib\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/Griffin/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Griffin/dlib/examples -BC:/Users/Griffin/dlib/examples/build --check-stamp-file C:/Users/Griffin/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_blas.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libpng.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\release_build_by_default;C:\Users\Griffin\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\Users\Griffin\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/Griffin/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Griffin/dlib/examples -BC:/Users/Griffin/dlib/examples/build --check-stamp-file C:/Users/Griffin/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_blas.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libpng.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\release_build_by_default;C:\Users\Griffin\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\Users\Griffin\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/Griffin/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Griffin/dlib/examples -BC:/Users/Griffin/dlib/examples/build --check-stamp-file C:/Users/Griffin/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_blas.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libpng.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\release_build_by_default;C:\Users\Griffin\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\Users\Griffin\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/Griffin/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Griffin/dlib/examples -BC:/Users/Griffin/dlib/examples/build --check-stamp-file C:/Users/Griffin/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_blas.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\find_libpng.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\release_build_by_default;C:\Users\Griffin\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\Users\Griffin\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\Users\Griffin\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Griffin\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\base64\base64_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\bigint\bigint_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\bigint\bigint_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\bit_stream\bit_stream_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\entropy_decoder\entropy_decoder_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\entropy_decoder\entropy_decoder_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\entropy_encoder\entropy_encoder_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\entropy_encoder\entropy_encoder_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\md5\md5_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\tokenizer\tokenizer_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\unicode\unicode.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\test_for_odr_violations.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\sockets\sockets_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\bsp\bsp.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\dir_nav\dir_nav_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\dir_nav\dir_nav_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\dir_nav\dir_nav_extensions.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\linker\linker_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\logger\extra_logger_headers.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\logger\logger_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\logger\logger_config_file.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\misc_api\misc_api_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\misc_api\misc_api_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\sockets\sockets_extensions.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\sockets\sockets_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\sockstreambuf\sockstreambuf.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\sockstreambuf\sockstreambuf_unbuffered.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\server\server_kernel.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\server\server_iostream.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\server\server_http.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\threads\multithreaded_object_extension.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\threads\threaded_object_extension.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\threads\threads_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\threads\threads_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\threads\threads_kernel_shared.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\threads\thread_pool_extension.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\threads\async.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\timer\timer.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\stack_trace.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\cuda\cpu_dlib.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\cuda\tensor_tools.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\data_io\image_dataset_metadata.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\data_io\mnist.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\global_optimization\global_function_search.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\filtering\kalman_filter.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\svm\auto.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_widgets\fonts.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_widgets\widgets.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_widgets\drawable.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_widgets\canvas_drawing.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_widgets\style.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_widgets\base_widgets.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_core\gui_core_kernel_1.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\gui_core\gui_core_kernel_2.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\arm\arm_init.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\arm\filter_neon_intrinsics.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\png.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngerror.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngget.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngmem.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngpread.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngread.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngrio.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngrtran.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngrutil.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngset.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngtrans.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngwio.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngwrite.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngwtran.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libpng\pngwutil.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\adler32.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\compress.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\crc32.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\deflate.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\gzclose.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\gzlib.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\gzread.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\gzwrite.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\infback.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\inffast.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\inflate.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\inftrees.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\trees.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\uncompr.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\zlib\zutil.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\image_loader\png_loader.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\image_saver\save_png.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jaricom.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcapimin.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcapistd.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcarith.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jccoefct.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jccolor.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcdctmgr.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jchuff.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcinit.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcmainct.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcmarker.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcmaster.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcomapi.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcparam.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcprepct.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jcsample.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdapimin.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdapistd.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdarith.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdatadst.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdatasrc.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdcoefct.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdcolor.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jddctmgr.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdhuff.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdinput.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdmainct.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdmarker.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdmaster.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdmerge.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdpostct.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jdsample.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jerror.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jfdctflt.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jfdctfst.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jfdctint.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jidctflt.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jidctfst.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jidctint.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jmemmgr.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jmemnobs.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jquant1.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jquant2.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\external\libjpeg\jutils.c" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\image_loader\jpeg_loader.cpp" />
+    <ClCompile Include="C:\Users\Griffin\dlib\dlib\image_saver\save_jpeg.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Griffin\dlib\examples\build\ZERO_CHECK.vcxproj">
+      <Project>{7FBAFF66-15F6-3BC8-8173-D786E9A7D755}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

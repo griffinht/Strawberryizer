@@ -1,0 +1,32 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.18/Modules/CMakePushCheckState.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckFunctionExists.c
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckFunctionExists.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckIncludeFile.c.in
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckIncludeFileCXX.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckTypeSize.c.in
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckTypeSize.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindBLAS.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindCUDA.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindCUDA/select_compute_arch.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindGIF.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindJPEG.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindPNG.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindThreads.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindZLIB.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/SelectLibraryConfigurations.cmake
+C:/Users/Griffin/dlib/dlib/CMakeLists.txt
+C:/Users/Griffin/dlib/dlib/cmake_utils/check_if_neon_available.cmake
+C:/Users/Griffin/dlib/dlib/cmake_utils/find_blas.cmake
+C:/Users/Griffin/dlib/dlib/cmake_utils/find_libjpeg.cmake
+C:/Users/Griffin/dlib/dlib/cmake_utils/find_libpng.cmake
+C:/Users/Griffin/dlib/dlib/cmake_utils/release_build_by_default
+C:/Users/Griffin/dlib/dlib/cmake_utils/set_compiler_specific_options.cmake
+C:/Users/Griffin/dlib/dlib/cmake_utils/use_cpp_11.cmake
+C:/Users/Griffin/dlib/examples/build/CMakeFiles/CheckTypeSize/SIZE_OF_VOID_PTR.c
