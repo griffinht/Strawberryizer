@@ -84,6 +84,22 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Program Files\OpenCV\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\OpenCV\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <IncludePath>C:\Program Files\OpenCV\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\OpenCV\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Program Files\OpenCV\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\OpenCV\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <IncludePath>C:\Program Files\OpenCV\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\OpenCV\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\Griffin\dlib\dlib\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -115,7 +131,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>dlib_build\Debug\dlib19.21.0_debug_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>dlib_build\Debug\dlib19.21.0_debug_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;opencv_world440d.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -159,7 +175,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>dlib_build\Release\dlib19.21.0_release_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>dlib_build\Release\dlib19.21.0_release_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;opencv_world440.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -203,7 +219,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>dlib_build\MinSizeRel\dlib19.21.0_minsizerel_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>dlib_build\MinSizeRel\dlib19.21.0_minsizerel_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;opencv_world412d.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -246,7 +262,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>dlib_build\RelWithDebInfo\dlib19.21.0_relwithdebinfo_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>dlib_build\RelWithDebInfo\dlib19.21.0_relwithdebinfo_64bit_msvc1924.lib;ws2_32.lib;winmm.lib;comctl32.lib;gdi32.lib;imm32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;opencv_world412d.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
