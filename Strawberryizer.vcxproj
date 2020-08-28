@@ -332,7 +332,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\Griffin\dlib\examples\Strawberryizer.cpp" />
+    <ClCompile Include="Strawberryizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\Griffin\dlib\examples\build\ZERO_CHECK.vcxproj">
