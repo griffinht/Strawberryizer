@@ -103,14 +103,12 @@ int main(int argc, char** argv)
         std::vector<dlib::full_object_detection> shapes;
         for (unsigned long j = 0; j < dets.size(); ++j)
         {
-            cv::Mat strawberry = cv::imread("strawberry.png", cv::IMREAD_UNCHANGED);
-            cv::Size strawberrySize = strawberry.size();
-            cv::Mat mask(strawberrySize.height, strawberrySize.width, CV_8UC4, cv::Scalar(0, 0, 0, 0));
+            cv::Mat input = cv::imread("test.jpg");//todo hardcode
 
             dlib:: full_object_detection shape = sp(img, dets[j]);
             
-            //cv::Point leftEye[1][6];
             std::vector<std::vector<cv::Point>> polys;
+
             std::vector<cv::Point> leftEye;
             for (int s = 36; s < 42; s++)
             {
@@ -135,25 +133,37 @@ int main(int argc, char** argv)
             }
             polys.push_back(mouth);
 
+            cv::Mat mask(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));
             cv::fillPoly(mask, polys, cv::Scalar(255, 255, 255, 255));
-            cv::bitwise_xor(strawberry, mask, strawberry);
-            cv::Mat input = cv::imread("test.jpg");//todo hardcode
-            cv::resize(strawberry, strawberry, input.size(), 0, 0, cv::INTER_CUBIC);
-            std::cout << "step: " << strawberry.step << ", channels" << strawberry.channels() << std::endl;
-            std::cout << "step: " << input.step << ", channels" << input.channels() << std::endl;
-            cv::Size s = input.size();
-            cv::Mat result(s.height, s.width, CV_8UC3);
+
+
+            cv::Mat strawberry = cv::imread("strawberry.png", cv::IMREAD_UNCHANGED);
+            dlib::point left = shape.part(0);
+            dlib::point right = shape.part(16);
+            dlib::point bottom = shape.part(8);
+            std::cout << right.x() << "-" << left.x() << std::endl;
+            cv::resize(strawberry, strawberry, cv::Size(right.x() - left.x(), std::min(std::max((int)(bottom.y() - left.y()) * 2, (int) bottom.y()), input.rows)), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
+
+            cv::Mat strawberryFix = cv::Mat(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));
+            std::cout << strawberry.cols << "," << strawberry.rows << ",,,," << strawberryFix.cols << ", " << strawberryFix.rows << std::endl;
+            std::cout << strawberryFix.cols << ", " << strawberryFix.rows << ",,,," << left.x() << "," << left.y() << std::endl;
+            strawberry.copyTo(strawberryFix(cv::Rect(left.x(), 0, strawberry.cols, strawberry.rows)));
+            std::cout << strawberryFix.cols << ", " << strawberryFix.rows << "," << input.cols << "," << input.rows << std::endl;
+
+            cv::bitwise_xor(strawberryFix, mask, strawberryFix);
+
+            
+            cv::Mat result(input.rows, input.cols, CV_8UC3);
             for (int y = 0; y < result.rows; y++)
             {
                 for (int x = 0; x < result.cols; x++)
                 {
-                    float opacity = ((float)strawberry.data[y * strawberry.step + x * strawberry.channels() + 3]) / 255;
+                    float opacity = ((float)strawberryFix.data[y * strawberryFix.step + x * strawberryFix.channels() + 3]) / 255;
                     for (int c = 0; c < input.channels(); c++)
                     {
-                        unsigned char strawberryPixel = strawberry.data[y * strawberry.step + x * strawberry.channels() + c];
+                        unsigned char strawberryPixel = strawberryFix.data[y * strawberryFix.step + x * strawberryFix.channels() + c];
                         unsigned char inputPixel = input.data[y * input.step + x * input.channels() + c];
                         result.data[y * input.step + input.channels() * x + c] = inputPixel * (1.0f - opacity) + strawberryPixel * opacity;
-                        //result.data[y * input.step + input.channels() * x + c] = opacity * 255;
                     }
                 }
             }
