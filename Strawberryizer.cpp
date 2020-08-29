@@ -153,8 +153,8 @@ int main(int argc, char** argv)
             std::cout << angle << " degrees, pos: (" << x << "," << y << "), size: (" << width << "," << height << ")" << std::endl;
             cv::resize(strawberry, strawberry, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
             
-            cv::Point2f center((strawberry.cols - 1) / 2.0, (strawberry.rows - 1) / 2.0);
-            cv::Mat strawberryRot = cv::getRotationMatrix2D(center, angle, 1.0);
+            
+            
             //cv::Rect2f boundingBox = cv::RotatedRect(cv::Point2f(), strawberry.size(), angle).boundingRect2f();
             //strawberryRot.at<double>(0, 2) += boundingBox.width / 2.0 - strawberry.cols / 2.0;
             //strawberryRot.at<double>(1, 2) += boundingBox.height / 2.0 - strawberry.rows / 2.0
@@ -164,6 +164,9 @@ int main(int argc, char** argv)
             std::cout << strawberryFix.cols << ", " << strawberryFix.rows << ",,,," << left.x() << "," << left.y() << std::endl;
             
             strawberry.copyTo(strawberryFix(cv::Rect(x - width / 2, y - height / 2, strawberry.cols, strawberry.rows)));
+            //cv::Point2f center((strawberry.cols - 1) / 2.0, (strawberry.rows - 1) / 2.0);
+            cv::Point2f center(x, y);
+            cv::Mat strawberryRot = cv::getRotationMatrix2D(center, angle, 1.0);
             cv::warpAffine(strawberryFix, strawberryFix, strawberryRot, strawberryFix.size());
             std::cout << strawberryFix.cols << ", " << strawberryFix.rows << "," << input.cols << "," << input.rows << std::endl;
 
