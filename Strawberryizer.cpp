@@ -142,8 +142,9 @@ int main(int argc, char** argv)
             dlib::point right = shape.part(16);
             dlib::point bottom = shape.part(8);
             dlib::point top = shape.part(27);
+            std::cout << "top: " << top.x() << "," << top.y() << " , bottom " << bottom.x() << "," << bottom.y() << std::endl;
             std::cout << right.x() << "-" << left.x() << std::endl;
-            float angle = std::atan((top.y() - bottom.y()) / (top.x() - bottom.x())) * 180 / 3.14159;
+            float angle = std::atan(((float)(bottom.x() - top.x())) / ((float)(bottom.y() - top.y()))) * 180 / 3.14159f;
             std::cout << "pog " << angle << std::endl;
             std::cout << (std::atan(top.y() - bottom.y()) / (top.x() - bottom.x())) << std::endl;
             int width = std::sqrt(std::pow(right.x() - left.x(), 2) + std::pow(right.y() - left.y(), 2)) * 1.5;
