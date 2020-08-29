@@ -89,7 +89,7 @@ int main(int argc, char** argv)
         // Loop over all the images provided on the command line.
         std::cout << "processing image " << "a" << std::endl;
         dlib::array2d<dlib::rgb_pixel> img;
-        load_image(img, "test.jpg");
+        load_image(img, "testR.jpg");
         // Make the image larger so we can detect small faces.
         //pyramid_up(img);
 
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
         std::vector<dlib::full_object_detection> shapes;
         for (unsigned long j = 0; j < dets.size(); ++j)
         {
-            cv::Mat input = cv::imread("test.jpg");//todo hardcode
+            cv::Mat input = cv::imread("testR.jpg");//todo hardcode
 
             dlib:: full_object_detection shape = sp(img, dets[j]);
             
@@ -141,16 +141,35 @@ int main(int argc, char** argv)
             dlib::point left = shape.part(0);
             dlib::point right = shape.part(16);
             dlib::point bottom = shape.part(8);
+            dlib::point top = shape.part(27);
             std::cout << right.x() << "-" << left.x() << std::endl;
-            cv::resize(strawberry, strawberry, cv::Size(right.x() - left.x(), std::min(std::max((int)(bottom.y() - left.y()) * 2, (int) bottom.y()), input.rows)), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
+            float angle = std::atan((top.y() - bottom.y()) / (top.x() - bottom.x())) * 180 / 3.14159;
+            std::cout << "pog " << angle << std::endl;
+            std::cout << (std::atan(top.y() - bottom.y()) / (top.x() - bottom.x())) << std::endl;
+            int width = std::sqrt(std::pow(right.x() - left.x(), 2) + std::pow(right.y() - left.y(), 2)) * 1.5;
+            int height = std::sqrt(std::pow(bottom.x() - top.x(), 2) + std::pow(bottom.y() - top.y(), 2)) * 2;
+            int x = top.x();
+            int y = top.y();
+            std::cout << angle << " degrees, pos: (" << x << "," << y << "), size: (" << width << "," << height << ")" << std::endl;
+            cv::resize(strawberry, strawberry, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
+            
+            cv::Point2f center((strawberry.cols - 1) / 2.0, (strawberry.rows - 1) / 2.0);
+            cv::Mat strawberryRot = cv::getRotationMatrix2D(center, angle, 1.0);
+            //cv::Rect2f boundingBox = cv::RotatedRect(cv::Point2f(), strawberry.size(), angle).boundingRect2f();
+            //strawberryRot.at<double>(0, 2) += boundingBox.width / 2.0 - strawberry.cols / 2.0;
+            //strawberryRot.at<double>(1, 2) += boundingBox.height / 2.0 - strawberry.rows / 2.0
 
             cv::Mat strawberryFix = cv::Mat(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));
             std::cout << strawberry.cols << "," << strawberry.rows << ",,,," << strawberryFix.cols << ", " << strawberryFix.rows << std::endl;
             std::cout << strawberryFix.cols << ", " << strawberryFix.rows << ",,,," << left.x() << "," << left.y() << std::endl;
-            strawberry.copyTo(strawberryFix(cv::Rect(left.x(), 0, strawberry.cols, strawberry.rows)));
+            
+            strawberry.copyTo(strawberryFix(cv::Rect(x - width / 2, y - height / 2, strawberry.cols, strawberry.rows)));
+            cv::warpAffine(strawberryFix, strawberryFix, strawberryRot, strawberryFix.size());
             std::cout << strawberryFix.cols << ", " << strawberryFix.rows << "," << input.cols << "," << input.rows << std::endl;
 
             cv::bitwise_xor(strawberryFix, mask, strawberryFix);
+
+
 
             
             cv::Mat result(input.rows, input.cols, CV_8UC3);
