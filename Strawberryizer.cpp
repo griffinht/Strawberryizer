@@ -63,8 +63,8 @@
 
 int main(int argc, char** argv)
 {  
-    try
-    {
+    //try
+    //{
         // This example takes in a shape model file and then a list of images to
         // process.  We will take these filenames in as command line arguments.
         // Dlib comes with example images in the examples/faces folder so give
@@ -163,9 +163,14 @@ int main(int argc, char** argv)
             cv::Mat strawberryFix = cv::Mat(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));
             std::cout << strawberry.cols << "," << strawberry.rows << ",,,," << strawberryFix.cols << ", " << strawberryFix.rows << std::endl;
             std::cout << strawberryFix.cols << ", " << strawberryFix.rows << ",,,," << left.x() << "," << left.y() << std::endl;
-            
-            strawberry.copyTo(strawberryFix(cv::Rect(x - width / 2, y - height / 2, strawberry.cols, strawberry.rows)));
+            int xx = x - width / 2;
+            int yy = y - height / 2;
+            std::cout << xx << "," << yy << ":::" << strawberry.cols + xx << " or " << strawberry.rows - yy << ", " << strawberryFix.cols + xx << " or " << strawberryFix.rows - yy << std::endl;
+            //strawberry.copyTo(strawberryFix(cv::Rect(xx, yy, std::min(strawberry.cols + xx, strawberryFix.cols - xx), std::min(strawberry.rows + yy, strawberryFix.rows - yy))));
+            strawberry = strawberry(cv::Rect(0, 0, (xx + strawberry.cols > strawberryFix.cols) ? strawberryFix.cols - xx : strawberry.cols, (yy + strawberry.rows > strawberryFix.rows) ? strawberryFix.rows - yy : strawberry.rows));
+            strawberry.copyTo(strawberryFix(cv::Rect(xx, yy, strawberry.cols, strawberry.rows)));
             //cv::Point2f center((strawberry.cols - 1) / 2.0, (strawberry.rows - 1) / 2.0);
+            std::cout << "pog" << std::endl;
             cv::Point2f center(x, y);
             cv::Mat strawberryRot = cv::getRotationMatrix2D(center, angle, 1.0);
             cv::warpAffine(strawberryFix, strawberryFix, strawberryRot, strawberryFix.size());
@@ -219,12 +224,12 @@ int main(int argc, char** argv)
 
         std::cout << "Hit enter to process the next image..." << std::endl;
         std::cin.get();
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "\nexception thrown!" << std::endl;
-        std::cout << e.what() << std::endl;
-    }
+    //}
+    //catch (std::exception& e)
+    //{
+    //    std::cout << "\nexception thrown!" << std::endl;
+     //   std::cout << e.what() << std::endl;
+    //
 }
 
 // ----------------------------------------------------------------------------------------
