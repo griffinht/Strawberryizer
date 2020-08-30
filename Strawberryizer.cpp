@@ -89,7 +89,7 @@ int main(int argc, char** argv)
         // Loop over all the images provided on the command line.
         std::cout << "processing image " << "a" << std::endl;
         dlib::array2d<dlib::rgb_pixel> img;
-        load_image(img, "testR.jpg");
+        load_image(img, "test.jpg");
         // Make the image larger so we can detect small faces.
         //pyramid_up(img);
 
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
         std::vector<dlib::full_object_detection> shapes;
         for (unsigned long j = 0; j < dets.size(); ++j)
         {
-            cv::Mat input = cv::imread("testR.jpg");//todo hardcode
+            cv::Mat input = cv::imread("test.jpg");//todo hardcode
 
             dlib:: full_object_detection shape = sp(img, dets[j]);
             
@@ -133,11 +133,11 @@ int main(int argc, char** argv)
             }
             polys.push_back(mouth);
 
-            cv::Mat mask(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));
+            cv::Mat mask(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));//todo doesnt this do nothing?
             cv::fillPoly(mask, polys, cv::Scalar(255, 255, 255, 255));
 
 
-            cv::Mat strawberry = cv::imread("strawberry.png", cv::IMREAD_UNCHANGED);
+            
             dlib::point left = shape.part(0);
             dlib::point right = shape.part(16);
             dlib::point bottom = shape.part(8);
@@ -152,44 +152,34 @@ int main(int argc, char** argv)
             int x = top.x();
             int y = top.y();
             std::cout << angle << " degrees, pos: (" << x << "," << y << "), size: (" << width << "," << height << ")" << std::endl;
-            cv::resize(strawberry, strawberry, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
+            cv::Mat strawberryR = cv::imread("strawberry.png", cv::IMREAD_UNCHANGED);
+            cv::resize(strawberryR, strawberryR, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
+            cv::Mat strawberryRotate(mask.size(), mask.type(), cv::Scalar(0, 0, 0, 0));
+            int xO = strawberryRotate.cols / 2 - strawberryR.cols / 2;
+            int yO = strawberryRotate.rows / 2 - strawberryR.rows / 2;
+            cv::Rect a(xO, yO, strawberryR.cols, strawberryR.rows);
+            strawberryR.copyTo(strawberryRotate(a));
+            cv::warpAffine(strawberryRotate, strawberryRotate, cv::getRotationMatrix2D(cv::Point2f(strawberryRotate.cols / 2, strawberryRotate.rows), angle, 1.0), strawberryRotate.size());
+
+            cv::Mat strawberry(mask.size(), mask.type());
+            int xOffset = x - width / 2;
+            int yOffset = y - height / 2;
+            cv::Rect b(xOffset, yOffset, (strawberryRotate.cols - xOffset <= strawberry.cols) ? strawberryRotate.cols - xOffset : strawberry.cols - xOffset, (strawberryRotate.rows - yOffset <= strawberry.rows) ? strawberryRotate.rows - yOffset : strawberry.rows - yOffset);
+            strawberryRotate.copyTo(strawberry);
+
+            cv::bitwise_xor(strawberry, mask, strawberry);
+            std::cout << strawberry.cols << "," << strawberry.rows << ",    " << mask.cols << "," << mask.rows << std::endl;
             
-            
-            
-            //cv::Rect2f boundingBox = cv::RotatedRect(cv::Point2f(), strawberry.size(), angle).boundingRect2f();
-            //strawberryRot.at<double>(0, 2) += boundingBox.width / 2.0 - strawberry.cols / 2.0;
-            //strawberryRot.at<double>(1, 2) += boundingBox.height / 2.0 - strawberry.rows / 2.0
 
-            cv::Mat strawberryFix = cv::Mat(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));
-            std::cout << strawberry.cols << "," << strawberry.rows << ",,,," << strawberryFix.cols << ", " << strawberryFix.rows << std::endl;
-            std::cout << strawberryFix.cols << ", " << strawberryFix.rows << ",,,," << left.x() << "," << left.y() << std::endl;
-            int xx = x - width / 2;
-            int yy = y - height / 2;
-            std::cout << xx << "," << yy << ":::" << strawberry.cols + xx << " or " << strawberry.rows - yy << ", " << strawberryFix.cols + xx << " or " << strawberryFix.rows - yy << std::endl;
-            //strawberry.copyTo(strawberryFix(cv::Rect(xx, yy, std::min(strawberry.cols + xx, strawberryFix.cols - xx), std::min(strawberry.rows + yy, strawberryFix.rows - yy))));
-            strawberry = strawberry(cv::Rect(0, 0, (xx + strawberry.cols > strawberryFix.cols) ? strawberryFix.cols - xx : strawberry.cols, (yy + strawberry.rows > strawberryFix.rows) ? strawberryFix.rows - yy : strawberry.rows));
-            strawberry.copyTo(strawberryFix(cv::Rect(xx, yy, strawberry.cols, strawberry.rows)));
-            //cv::Point2f center((strawberry.cols - 1) / 2.0, (strawberry.rows - 1) / 2.0);
-            std::cout << "pog" << std::endl;
-            cv::Point2f center(x, y);
-            cv::Mat strawberryRot = cv::getRotationMatrix2D(center, angle, 1.0);
-            cv::warpAffine(strawberryFix, strawberryFix, strawberryRot, strawberryFix.size());
-            std::cout << strawberryFix.cols << ", " << strawberryFix.rows << "," << input.cols << "," << input.rows << std::endl;
-
-            cv::bitwise_xor(strawberryFix, mask, strawberryFix);
-
-
-
-            
             cv::Mat result(input.rows, input.cols, CV_8UC3);
             for (int y = 0; y < result.rows; y++)
             {
                 for (int x = 0; x < result.cols; x++)
                 {
-                    float opacity = ((float)strawberryFix.data[y * strawberryFix.step + x * strawberryFix.channels() + 3]) / 255;
+                    float opacity = ((float)strawberry.data[y * strawberry.step + x * strawberry.channels() + 3]) / 255;
                     for (int c = 0; c < input.channels(); c++)
                     {
-                        unsigned char strawberryPixel = strawberryFix.data[y * strawberryFix.step + x * strawberryFix.channels() + c];
+                        unsigned char strawberryPixel = strawberry.data[y * strawberry.step + x * strawberry.channels() + c];
                         unsigned char inputPixel = input.data[y * input.step + x * input.channels() + c];
                         result.data[y * input.step + input.channels() * x + c] = inputPixel * (1.0f - opacity) + strawberryPixel * opacity;
                     }
