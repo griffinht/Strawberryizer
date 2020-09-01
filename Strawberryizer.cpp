@@ -63,8 +63,8 @@
 
 int main(int argc, char** argv)
 {  
-    //try
-    //{
+    try
+    {
         // This example takes in a shape model file and then a list of images to
         // process.  We will take these filenames in as command line arguments.
         // Dlib comes with example images in the examples/faces folder so give
@@ -135,8 +135,6 @@ int main(int argc, char** argv)
 
             cv::Mat mask(input.rows, input.cols, CV_8UC4, cv::Scalar(0, 0, 0, 0));//todo doesnt this do nothing?
             cv::fillPoly(mask, polys, cv::Scalar(255, 255, 255, 255));
-
-
             
             dlib::point left = shape.part(0);
             dlib::point right = shape.part(16);
@@ -242,12 +240,12 @@ int main(int argc, char** argv)
 
         std::cout << "Hit enter to process the next image..." << std::endl;
         std::cin.get();
-    //}
-    //catch (std::exception& e)
-    //{
-    //    std::cout << "\nexception thrown!" << std::endl;
-     //   std::cout << e.what() << std::endl;
-    //
+    }
+    catch (std::exception & e)
+    {
+        std::cout << "\nexception thrown!" << std::endl;
+        std::cout << e.what() << std::endl;
+    }
 }
 
 // ----------------------------------------------------------------------------------------
