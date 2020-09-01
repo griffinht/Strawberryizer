@@ -89,7 +89,7 @@ int main(int argc, char** argv)
         // Loop over all the images provided on the command line.
         std::cout << "processing image " << "a" << std::endl;
         dlib::array2d<dlib::rgb_pixel> img;
-        load_image(img, "test.jpg");
+        load_image(img, "testR.jpg");
         // Make the image larger so we can detect small faces.
         //pyramid_up(img);
 
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
         std::vector<dlib::full_object_detection> shapes;
         for (unsigned long j = 0; j < dets.size(); ++j)
         {
-            cv::Mat input = cv::imread("test.jpg");//todo hardcode
+            cv::Mat input = cv::imread("testR.jpg");//todo hardcode
 
             dlib:: full_object_detection shape = sp(img, dets[j]);
             
@@ -159,7 +159,7 @@ int main(int argc, char** argv)
             int yO = strawberryRotate.rows / 2 - strawberryR.rows / 2;
             cv::Rect a(xO, yO, strawberryR.cols, strawberryR.rows);
             strawberryR.copyTo(strawberryRotate(a));
-            cv::warpAffine(strawberryRotate, strawberryRotate, cv::getRotationMatrix2D(cv::Point2f(strawberryRotate.cols / 2, strawberryRotate.rows), angle, 1.0), strawberryRotate.size());
+            cv::warpAffine(strawberryRotate, strawberryRotate, cv::getRotationMatrix2D(cv::Point2f(strawberryRotate.cols / 2, strawberryRotate.rows / 2), angle, 1.0), strawberryRotate.size());
 
             cv::Mat strawberry(mask.size(), mask.type());
             int xOffset = x - width / 2;
