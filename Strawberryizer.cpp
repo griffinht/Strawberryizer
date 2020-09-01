@@ -161,7 +161,7 @@ int main(int argc, char** argv)
             strawberryR.copyTo(strawberryRotate(a));
             cv::warpAffine(strawberryRotate, strawberryRotate, cv::getRotationMatrix2D(cv::Point2f(strawberryRotate.cols / 2, strawberryRotate.rows / 2), angle, 1.0), strawberryRotate.size());
 
-            cv::Mat strawberry(mask.size(), mask.type());
+            cv::Mat strawberry(mask.size(), mask.type(), cv::Scalar(0, 0, 0, 0));
             int xOffset = x - width / 2;
             int yOffset = y - height / 2;
             cv::Rect c(0, 0, strawberry.cols - xOffset, strawberry.rows - yOffset);
