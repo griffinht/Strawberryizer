@@ -164,8 +164,36 @@ int main(int argc, char** argv)
             cv::Mat strawberry(mask.size(), mask.type());
             int xOffset = x - width / 2;
             int yOffset = y - height / 2;
-            cv::Rect b(xOffset, yOffset, (strawberryRotate.cols - xOffset <= strawberry.cols) ? strawberryRotate.cols - xOffset : strawberry.cols - xOffset, (strawberryRotate.rows - yOffset <= strawberry.rows) ? strawberryRotate.rows - yOffset : strawberry.rows - yOffset);
-            strawberryRotate.copyTo(strawberry);
+            cv::Rect c(0, 0, strawberry.cols - xOffset, strawberry.rows - yOffset);
+            if (xOffset < 0)
+            {
+                c.x = -xOffset;
+                c.width += xOffset;
+                xOffset = 0;
+                if (c.x + c.width > strawberryRotate.cols)
+                {
+                    c.width -= (c.x + c.width) - strawberryRotate.cols;
+                }
+            }
+            if (yOffset < 0)
+            {
+                c.y = -yOffset;
+                c.height += yOffset;
+                yOffset = 0;
+                if (c.y + c.height> strawberryRotate.rows)
+                {
+                    c.height -= (c.y + c.height) - strawberryRotate.rows;
+                }
+            }
+            if (xOffset + c.width > strawberry.cols)
+            {
+                c.width -= (xOffset + c.width) - strawberry.cols;
+            }
+            if (yOffset + c.height > strawberry.rows)
+            {
+                c.height -= (yOffset + c.height) - strawberry.rows;
+            }
+            strawberryRotate(c).copyTo(strawberry(cv::Rect(xOffset, yOffset, c.width, c.height)));
 
             cv::bitwise_xor(strawberry, mask, strawberry);
             std::cout << strawberry.cols << "," << strawberry.rows << ",    " << mask.cols << "," << mask.rows << std::endl;
