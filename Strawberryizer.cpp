@@ -13,23 +13,34 @@ int main(int argc, char** argv)
 {  
     try
     {
-        std::cout << "Getting front face detector: ";
+        auto start = std::chrono::high_resolution_clock::now();
+        std::cout << "Getting front face detector...";
         dlib::frontal_face_detector detector = dlib::get_frontal_face_detector();
-        std::cout << "Got it (" << ")" << std::endl;
+        auto now = std::chrono::high_resolution_clock::now();
+        std::cout << "\rGot front face detector in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
+        start = now;
+
         dlib::shape_predictor sp;
-        std::cout << "deserializing\n";
+        std::cout << "Deserializing training data...";
         dlib::deserialize("shape_predictor_68_face_landmarks.dat") >> sp;
-        std::cout << "done\n";
+        now = std::chrono::high_resolution_clock::now();
+        std::cout << "\rDeserialized training data in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
+        start = now;
 
-
-        dlib::image_window win, win_faces;
-        std::cout << "processing image " << "a" << std::endl;
+        std::cout << "Loading testR.jpg";
         dlib::array2d<dlib::rgb_pixel> img;
         load_image(img, "testR.jpg");
-        std::vector<dlib::rectangle> dets = detector(img);
-        std::cout << "Number of faces detected: " << dets.size() << std::endl;
+        now = std::chrono::high_resolution_clock::now();
+        std::cout << "\rLoaded testR.jpg in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
+        start = now;
 
-        std::vector<dlib::full_object_detection> shapes;
+        std::cout << "Finding faces...";
+        std::vector<dlib::rectangle> dets = detector(img);
+        now = std::chrono::high_resolution_clock::now();
+        std::cout << "\rFound " << dets.size() << " faces in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
+        start = now;
+
+        std::cout << "Applying " << dets.size() << " strawberries...";
         for (unsigned long j = 0; j < dets.size(); ++j)
         {
             cv::Mat input = cv::imread("testR.jpg");//todo hardcode
@@ -72,7 +83,6 @@ int main(int argc, char** argv)
             std::cout << "top: " << top.x() << "," << top.y() << " , bottom " << bottom.x() << "," << bottom.y() << std::endl;
             std::cout << right.x() << "-" << left.x() << std::endl;
             float angle = std::atan(((float)(bottom.x() - top.x())) / ((float)(bottom.y() - top.y()))) * 180 / 3.14159f;
-            std::cout << "pog " << angle << std::endl;
             std::cout << (std::atan(top.y() - bottom.y()) / (top.x() - bottom.x())) << std::endl;
             int width = std::sqrt(std::pow(right.x() - left.x(), 2) + std::pow(right.y() - left.y(), 2)) * 1.5;
             int height = std::sqrt(std::pow(bottom.x() - top.x(), 2) + std::pow(bottom.y() - top.y(), 2)) * 2;
@@ -123,8 +133,6 @@ int main(int argc, char** argv)
             strawberryRotate(c).copyTo(strawberry(cv::Rect(xOffset, yOffset, c.width, c.height)));
 
             cv::bitwise_xor(strawberry, mask, strawberry);
-            std::cout << strawberry.cols << "," << strawberry.rows << ",    " << mask.cols << "," << mask.rows << std::endl;
-            
 
             cv::Mat result(input.rows, input.cols, CV_8UC3);
             for (int y = 0; y < result.rows; y++)
@@ -141,15 +149,9 @@ int main(int argc, char** argv)
                 }
             }
             cv::imwrite("result.jpg", result);
-
-            for (unsigned int s = 0; s < shape.num_parts(); s++)
-            {
-                std::cout << ", " << shape.part(s);
-            }
-            std::cout << std::endl;
-            shapes.push_back(shape);
         }
-        std::cout << "all done";
+        now = std::chrono::high_resolution_clock::now();
+        std::cout << "\rApplied strawberries in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
     }
     catch (std::exception & e)
     {
