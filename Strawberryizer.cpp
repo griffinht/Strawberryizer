@@ -40,7 +40,7 @@ int main(int argc, char** argv)
         std::cout << "\rFound " << dets.size() << " faces in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
         start = now;
 
-        std::cout << "Applying " << dets.size() << " strawberries...";
+        std::cout << "Applying " << dets.size() << " strawberries..." << std::endl;
         for (unsigned long j = 0; j < dets.size(); ++j)
         {
             cv::Mat input = cv::imread("testR.jpg");//todo hardcode
