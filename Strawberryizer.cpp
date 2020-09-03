@@ -167,7 +167,7 @@ int main(int argc, char** argv)
             int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
             std::cout << path << " completed in " << elapsed << "ms" << std::endl;
             std::cout << path;
-            cv::imwrite(path.substr(0, path.length() - 3) + std::to_string(elapsed) + ".jpg", result);
+            cv::imwrite(path.substr(0, path.length() - 3) + "done.jpg", result);
             start = now;
 
         }
