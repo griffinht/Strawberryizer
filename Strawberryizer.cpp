@@ -10,7 +10,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <filesystem>
 
-cv::Mat strawberryize(std::string path, dlib::frontal_face_detector* detector, dlib::shape_predictor* shapePredictor)
+cv::Mat strawberryize(cv::Mat *strawberryR, std::string path, dlib::frontal_face_detector* detector, dlib::shape_predictor* shapePredictor)
 {
     auto start = std::chrono::high_resolution_clock::now();
     auto now = start;
@@ -76,13 +76,12 @@ cv::Mat strawberryize(std::string path, dlib::frontal_face_detector* detector, d
         int x = top.x();
         int y = top.y();
         std::cout << angle << " degrees, pos: (" << x << "," << y << "), size: (" << width << "," << height << ")" << std::endl;
-        cv::Mat strawberryR = cv::imread("strawberry.png", cv::IMREAD_UNCHANGED);
-        cv::resize(strawberryR, strawberryR, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
+        cv::resize(*strawberryR, *strawberryR, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
         cv::Mat strawberryRotate(mask.size(), mask.type(), cv::Scalar(0, 0, 0, 0));
-        int xO = strawberryRotate.cols / 2 - strawberryR.cols / 2;
-        int yO = strawberryRotate.rows / 2 - strawberryR.rows / 2;
-        cv::Rect a(xO, yO, strawberryR.cols, strawberryR.rows);
-        strawberryR.copyTo(strawberryRotate(a));
+        int xO = strawberryRotate.cols / 2 - (*strawberryR).cols/ 2;
+        int yO = strawberryRotate.rows / 2 - (*strawberryR).rows / 2;
+        cv::Rect a(xO, yO, (*strawberryR).cols, (*strawberryR).rows);
+        (*strawberryR).copyTo(strawberryRotate(a));
         cv::warpAffine(strawberryRotate, strawberryRotate, cv::getRotationMatrix2D(cv::Point2f(strawberryRotate.cols / 2, strawberryRotate.rows / 2), angle, 1.0), strawberryRotate.size());
         cv::Mat strawberry(mask.size(), mask.type(), cv::Scalar(0, 0, 0, 0));
         int xOffset = x - strawberry.cols / 2;
@@ -159,10 +158,11 @@ int main(int argc, char** argv)
         start = now;
 
         std::string dir = "testImages";
+        cv::Mat strawberryR = cv::imread("strawberry.png", cv::IMREAD_UNCHANGED);
         for (auto& entry : std::filesystem::directory_iterator(dir))
         {
             std::string path = entry.path().string();
-            cv::Mat result = strawberryize(path, &detector, &shapePredictor);
+            cv::Mat result = strawberryize(&strawberryR, path, &detector, &shapePredictor);
             now = std::chrono::high_resolution_clock::now();
             int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
             std::cout << path << " completed in " << elapsed << "ms" << std::endl;
