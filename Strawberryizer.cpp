@@ -67,10 +67,10 @@ cv::Mat strawberryize(std::string path, dlib::frontal_face_detector* detector, d
         dlib::point right = shape.part(16);
         dlib::point bottom = shape.part(8);
         dlib::point top = shape.part(27);
-        std::cout << "top: " << top.x() << "," << top.y() << " , bottom " << bottom.x() << "," << bottom.y() << std::endl;
-        std::cout << right.x() << "-" << left.x() << std::endl;
+        //std::cout << "top: " << top.x() << "," << top.y() << " , bottom " << bottom.x() << "," << bottom.y() << std::endl;
+        //std::cout << right.x() << "-" << left.x() << std::endl;
         float angle = std::atan(((float)(bottom.x() - top.x())) / ((float)(bottom.y() - top.y()))) * 180 / 3.14159f;
-        std::cout << (std::atan(top.y() - bottom.y()) / (top.x() - bottom.x())) << std::endl;
+        //std::cout << (std::atan(top.y() - bottom.y()) / (top.x() - bottom.x())) << std::endl;
         int width = std::sqrt(std::pow(right.x() - left.x(), 2) + std::pow(right.y() - left.y(), 2)) * 1.5;
         int height = std::sqrt(std::pow(bottom.x() - top.x(), 2) + std::pow(bottom.y() - top.y(), 2)) * 2;
         int x = top.x();
@@ -84,10 +84,9 @@ cv::Mat strawberryize(std::string path, dlib::frontal_face_detector* detector, d
         cv::Rect a(xO, yO, strawberryR.cols, strawberryR.rows);
         strawberryR.copyTo(strawberryRotate(a));
         cv::warpAffine(strawberryRotate, strawberryRotate, cv::getRotationMatrix2D(cv::Point2f(strawberryRotate.cols / 2, strawberryRotate.rows / 2), angle, 1.0), strawberryRotate.size());
-
         cv::Mat strawberry(mask.size(), mask.type(), cv::Scalar(0, 0, 0, 0));
-        int xOffset = x - width / 2;
-        int yOffset = y - height / 2;
+        int xOffset = x - strawberry.cols / 2;
+        int yOffset = y - strawberry.rows / 2;
         cv::Rect c(0, 0, strawberry.cols - xOffset, strawberry.rows - yOffset);
         if (xOffset < 0)
         {
@@ -117,6 +116,7 @@ cv::Mat strawberryize(std::string path, dlib::frontal_face_detector* detector, d
         {
             c.height -= (yOffset + c.height) - strawberry.rows;
         }
+        std::cout << "left: " << xOffset << ", down: " << yOffset << ", width: " << c.width << ", height: " << c.height << std::endl;
         strawberryRotate(c).copyTo(strawberry(cv::Rect(xOffset, yOffset, c.width, c.height)));
 
         cv::bitwise_xor(strawberry, mask, strawberry);
