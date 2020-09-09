@@ -1,3 +1,7 @@
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "wS2_32.lib")
+
 #include <dlib/image_processing/frontal_face_detector.h>
 #include <dlib/image_processing/render_face_detections.h>
 #include <dlib/image_processing.h>
@@ -78,7 +82,7 @@ cv::Mat strawberryize(cv::Mat *strawberryR, std::string path, dlib::frontal_face
         std::cout << angle << " degrees, pos: (" << x << "," << y << "), size: (" << width << "," << height << ")" << std::endl;
         cv::resize(*strawberryR, *strawberryR, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);//todo no inter cubic?
         cv::Mat strawberryRotate(mask.size(), mask.type(), cv::Scalar(0, 0, 0, 0));
-        int xO = strawberryRotate.cols / 2 - (*strawberryR).cols/ 2;
+        int xO = strawberryRotate.cols / 2 - (*strawberryR).cols / 2;
         int yO = strawberryRotate.rows / 2 - (*strawberryR).rows / 2;
         cv::Rect a(xO, yO, (*strawberryR).cols, (*strawberryR).rows);
         (*strawberryR).copyTo(strawberryRotate(a));
@@ -139,8 +143,109 @@ cv::Mat strawberryize(cv::Mat *strawberryR, std::string path, dlib::frontal_face
     return cv::Mat();
 }
 
+#define HOST "localhost"
+#define PORT "69"
+#define DEFAULT_BUFLEN 512
+
 int main(int argc, char** argv)
 {
+    std::cout << "Starting Strawberryizer...\n";
+    WSADATA wsaData;
+    int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0) {
+        std::cout << stderr << "WSAStartup machine broke" << iResult << std::endl;
+        return 1;
+    }
+
+    struct addrinfo *result = 0, hints;
+    memset(&hints, 0, sizeof(hints));
+
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_TCP;
+    hints.ai_flags = AI_PASSIVE;
+    //todo necessary?
+    iResult = getaddrinfo(NULL, PORT, &hints, &result);
+    if (iResult != 0) {
+        std::cout << "getaddrinfo failed with error" << std::endl << iResult;
+        WSACleanup();
+        return 1;
+    }
+
+    SOCKET sock = INVALID_SOCKET;
+     sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+    if (sock == INVALID_SOCKET)
+    {
+        std::cout << "error opening socket" << WSAGetLastError() << std::endl;
+        freeaddrinfo(result);
+        WSACleanup();
+        return 1;
+    }
+
+    iResult = bind(sock, result->ai_addr ,(int)result->ai_addrlen);
+    if (iResult == SOCKET_ERROR)
+    {
+        std::cout << "couldnt bind to port " << PORT << ", got " << WSAGetLastError() << std::endl;
+        freeaddrinfo(result);
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+
+    freeaddrinfo(result);
+
+    iResult = listen(sock, SOMAXCONN);
+    if (iResult == SOCKET_ERROR)
+    {
+        std::cout << "listen failed with " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+
+    SOCKET clientSock = INVALID_SOCKET;
+    clientSock = accept(sock, NULL, NULL);
+    if (clientSock == INVALID_SOCKET)
+    {
+        std::cout << "couldnt accept connection " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+
+    closesocket(sock);
+
+    do {
+        char recvBuffer[DEFAULT_BUFLEN];
+        int recvBufferLength = DEFAULT_BUFLEN;
+        iResult = recv(clientSock, recvBuffer, recvBufferLength, 0);
+        if (iResult > 0)
+        {
+            std::cout << "got " << iResult;
+        }
+        else if (iResult == 0)
+        {
+            std::cout << "closing" << std::endl;
+        }
+        else {
+            std::cout << "recv failed " << WSAGetLastError();
+            closesocket(clientSock);
+            WSACleanup();
+            return 1;
+        }
+    } while (iResult > 0);
+
+    iResult = shutdown(clientSock, SD_SEND);
+    if (iResult == SOCKET_ERROR)
+    {
+        std::cout << "shutdown failed " << WSAGetLastError();
+        closesocket(clientSock);
+        WSACleanup();
+        return 1;
+    }
+
+    closesocket(clientSock);
+
     try
     {
         auto start = std::chrono::high_resolution_clock::now();
