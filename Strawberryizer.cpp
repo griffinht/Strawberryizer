@@ -7,6 +7,7 @@
 #include <dlib/image_processing.h>
 #include <dlib/gui_widgets.h>
 #include <dlib/image_io.h>
+#include <dlib/opencv/cv_image.h>
 #include <iostream>
 
 #include <opencv2/core.hpp>
@@ -14,15 +15,16 @@
 #include <opencv2/imgcodecs.hpp>
 #include <filesystem>
 
-cv::Mat strawberryize(cv::Mat *strawberryR, std::string path, dlib::frontal_face_detector* detector, dlib::shape_predictor* shapePredictor)
+int strawberryize(dlib::frontal_face_detector* detector, dlib::shape_predictor* shapePredictor, cv::Mat *strawberryR, char* inputBuffer, char* outputBuffer)
 {
-    auto start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();//todo check for size and memory leaks!!!!!! whats a memory leak
     auto now = start;
-    std::cout << "Loading " + path;
+    std::cout << "Loading ";
+    cv::Mat input = cv::imdecode(*inputBuffer, 0);//todo hardcode
     dlib::array2d<dlib::rgb_pixel> img;
-    load_image(img, path);
+    dlib::assign_image(img, dlib::cv_image<dlib::bgr_pixel>(input));
     now = std::chrono::high_resolution_clock::now();
-    std::cout << "\rLoaded " + path + " in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
+    std::cout << "\rLoaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
     start = now;
 
     std::cout << "Finding faces...";
@@ -34,8 +36,6 @@ cv::Mat strawberryize(cv::Mat *strawberryR, std::string path, dlib::frontal_face
     std::cout << "Applying " << dets.size() << " strawberries..." << std::endl;
     for (unsigned long j = 0; j < dets.size(); ++j)//todo multiple faces
     {
-        cv::Mat input = cv::imread(path);//todo hardcode
-
         dlib::full_object_detection shape = (*shapePredictor)(img, dets[j]);
 
         std::vector<std::vector<cv::Point>> polys;
@@ -138,44 +138,31 @@ cv::Mat strawberryize(cv::Mat *strawberryR, std::string path, dlib::frontal_face
                 }
             }
         }
-        return result;
+        std::vector<unsigned char> outputVector;
+        cv::imencode("jpg", strawberry, outputVector);
+        outputBuffer = reinterpret_cast<char*>(outputVector.front());
+        return outputVector.size();
     }
-    return cv::Mat();
+    return 0;
 }
 
-int doIt(char* image, int length, char* output)
+void loadDlib(dlib::frontal_face_detector* detector, dlib::shape_predictor* shapePredictor)
 {
     try
     {
         auto start = std::chrono::high_resolution_clock::now();
         std::cout << "Getting front face detector...";
-        dlib::frontal_face_detector detector = dlib::get_frontal_face_detector();
+        *detector = dlib::get_frontal_face_detector();
+        //*detector = dlib::get_frontal_face_detector();
         auto now = std::chrono::high_resolution_clock::now();
         std::cout << "\rGot front face detector in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
         start = now;
 
-        dlib::shape_predictor shapePredictor;
         std::cout << "Deserializing training data...";
-        dlib::deserialize("shape_predictor_68_face_landmarks.dat") >> shapePredictor;
+        dlib::deserialize("shape_predictor_68_face_landmarks.dat") >> *shapePredictor;
         now = std::chrono::high_resolution_clock::now();
         std::cout << "\rDeserialized training data in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
         start = now;
-
-        std::string dir = "testImages";
-        cv::Mat strawberryR = cv::imread("strawberry.png", cv::IMREAD_UNCHANGED);
-        for (auto& entry : std::filesystem::directory_iterator(dir))
-        {
-            std::string path = entry.path().string();
-            cv::Mat result = strawberryize(&strawberryR, path, &detector, &shapePredictor);
-            now = std::chrono::high_resolution_clock::now();
-            int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
-            std::cout << path << " completed in " << elapsed << "ms" << std::endl;
-            std::cout << path;
-            cv::imwrite(path.substr(0, path.length() - 3) + "done.jpg", result);
-            start = now;
-
-        }
-        std::cout << "All done" << std::endl;
     }
     catch (std::exception& e)
     {
@@ -186,10 +173,18 @@ int doIt(char* image, int length, char* output)
 
 #define HOST "localhost"
 #define PORT "69"
+#define STRAWBERRRY_ROTATE_PNG "strawberry.png"
 
 int main(int argc, char** argv)
 {
     std::cout << "Starting Strawberryizer...\n";
+    dlib::frontal_face_detector detector;
+    dlib::shape_predictor shapePredictor;
+    loadDlib(&detector, &shapePredictor);
+    cv::Mat strawberryR = cv::imread(STRAWBERRRY_ROTATE_PNG, cv::IMREAD_UNCHANGED);
+    std::cout << "Loaded " << STRAWBERRRY_ROTATE_PNG << "\n";
+    std::cout << "Initializing network stuff\n";
+
     WSADATA wsaData;
     int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
@@ -260,7 +255,7 @@ int main(int argc, char** argv)
     if (iResult > 0)
     {
         std::cout << "got " << iResult << "bytes \n";
-        int recvLength = (int) recvLengthBuffer;
+        int recvLength = (int)recvLengthBuffer;
         char* recvBuffer = new char[recvLength];
         iResult = recv(clientSock, recvBuffer, recvLength, 0);
         if (iResult > 0)
@@ -274,11 +269,11 @@ int main(int argc, char** argv)
             else
             {
                 std::cout << "got the goods (" << iResult << ")\n";
-                char* output;
-                int outputLength = doIt(recvBuffer, recvLength, output + 4);
-                memset(output, outputLength, 4);
-                int sendLength = 4 + outputLength;
-                iResult = send(clientSock, output, sendLength, 0);
+                char* outputBuffer;
+                int strawberryLength = strawberryize(&detector, &shapePredictor, &strawberryR, recvBuffer, outputBuffer + 4);
+                int outputBufferLength = strawberryLength + 4;
+                memset(outputBuffer, strawberryLength, 4);
+                iResult = send(clientSock, outputBuffer, outputBufferLength, 0);
                 if (iResult == SOCKET_ERROR)
                 {
                     std::cout << "send failed " << WSAGetLastError();
@@ -288,9 +283,9 @@ int main(int argc, char** argv)
                 }
                 else
                 {
-                    std::cout << "sent " << iResult << " bytes (file is " << outputLength << " bytes long + 4 bytes overhead\n";
+                    std::cout << "sent " << iResult << " bytes (file is " << outputBufferLength << " bytes long + 4 bytes overhead\n";
                 }
-                delete[] output;//is this dangerous or somethinhg because its allocated in another method
+                //delete[] outputBuffer;//is this dangerous or somethinhg because its allocated in another method also necessary becasue scope?
             }
         }
         else if (iResult == 0)

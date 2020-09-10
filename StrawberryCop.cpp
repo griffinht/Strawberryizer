@@ -1,12 +1,17 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
+#include <thread>
 
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #pragma comment(lib, "wS2_32.lib")
 
 #define HOST "localhost"
 #define PORT "69"
+#define MAX_CONNECTION_ATTEMPTS -1
+#define CONNECTION_ATTEMPT_TIMEOUT 0
 
 int main()
 {
@@ -33,8 +38,11 @@ int main()
     }
     
     SOCKET sock = INVALID_SOCKET;
-    for (ptr = result; ptr != 0; ptr = ptr->ai_next)
+    int attempts = 0;
+    ptr = result;
+    while (MAX_CONNECTION_ATTEMPTS >= 0 ? attempts < MAX_CONNECTION_ATTEMPTS : true)//attempts to zero is allowed i guess, set to -1 for infinite attempts
     {
+        attempts++;
         sock = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
         if (sock == INVALID_SOCKET)
         {
@@ -42,13 +50,22 @@ int main()
             WSACleanup();
             return 1;
         }
-
+        std::cout << "tryna cop a connection to " << inet_ntoa((((struct sockaddr_in*)ptr->ai_addr)->sin_addr)) << "\n";
         iResult = connect(sock, ptr->ai_addr, (int)ptr->ai_addrlen);
         if (iResult == SOCKET_ERROR)
         {
             closesocket(sock);
             sock = INVALID_SOCKET;
             std::cout << "trying connection again\n";
+            ptr = ptr->ai_next;
+            if (ptr == NULL)
+            {
+                ptr = result;
+            }
+            if (CONNECTION_ATTEMPT_TIMEOUT > 0)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(CONNECTION_ATTEMPT_TIMEOUT));
+            }
             continue;
         }
         break;
