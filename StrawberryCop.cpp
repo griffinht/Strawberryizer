@@ -117,8 +117,10 @@ int main()
         }
         else
         {
-            int recvLength = (int) recvLengthBuffer;
-            char *recvBuffer = new char[recvLength];
+            int recvLength = 0;
+            memcpy(&recvLength, recvLengthBuffer, 4);
+            std::cout << (int) recvLengthBuffer[0] << ", " << (int)recvLengthBuffer[1] << ", " << (int)recvLengthBuffer[2] << ", " << (int)recvLengthBuffer[3] << ",,, " << (int)*recvLengthBuffer << "\n";
+            char *recvBuffer = new char[recvLength];//todo bounds checking in case of corruption or something
             iResult = recv(sock, recvBuffer, recvLength, 0);
             if (iResult > 0)
             {

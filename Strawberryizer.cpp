@@ -15,12 +15,18 @@
 #include <opencv2/imgcodecs.hpp>
 #include <filesystem>
 
-int strawberryize(dlib::frontal_face_detector* detector, dlib::shape_predictor* shapePredictor, cv::Mat *strawberryR, char* inputBuffer, char* outputBuffer)
+int strawberryize(dlib::frontal_face_detector* detector, dlib::shape_predictor* shapePredictor, cv::Mat *strawberryR, char* inputBuffer, int inputBufferLength, char** outputBuffer)
 {
     auto start = std::chrono::high_resolution_clock::now();//todo check for size and memory leaks!!!!!! whats a memory leak
     auto now = start;
-    std::cout << "Loading ";
-    cv::Mat input = cv::imdecode(*inputBuffer, 0);//todo hardcode
+    std::cout << "Loading...";
+    cv::Mat rawInput(1, inputBufferLength, CV_8UC1, (void*)inputBuffer);
+    cv::Mat input = cv::imdecode(rawInput, 1);//todo hardcode
+    if (input.data == NULL)
+    {
+        std::cout << "error decoding image from buffer\n";
+        //todo something
+    }
     dlib::array2d<dlib::rgb_pixel> img;
     dlib::assign_image(img, dlib::cv_image<dlib::bgr_pixel>(input));
     now = std::chrono::high_resolution_clock::now();
@@ -139,8 +145,9 @@ int strawberryize(dlib::frontal_face_detector* detector, dlib::shape_predictor* 
             }
         }
         std::vector<unsigned char> outputVector;
-        cv::imencode("jpg", strawberry, outputVector);
-        outputBuffer = reinterpret_cast<char*>(outputVector.front());
+        cv::imencode(".jpg", strawberry, outputVector);
+        *outputBuffer = new char[outputVector.size()];
+        memcpy(*outputBuffer, outputVector.data(), outputVector.size());
         return outputVector.size();
     }
     return 0;
@@ -153,7 +160,6 @@ void loadDlib(dlib::frontal_face_detector* detector, dlib::shape_predictor* shap
         auto start = std::chrono::high_resolution_clock::now();
         std::cout << "Getting front face detector...";
         *detector = dlib::get_frontal_face_detector();
-        //*detector = dlib::get_frontal_face_detector();
         auto now = std::chrono::high_resolution_clock::now();
         std::cout << "\rGot front face detector in " << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms" << std::endl;
         start = now;
@@ -255,7 +261,8 @@ int main(int argc, char** argv)
     if (iResult > 0)
     {
         std::cout << "got " << iResult << "bytes \n";
-        int recvLength = (int)recvLengthBuffer;
+        int recvLength;
+        memcpy(&recvLength, recvLengthBuffer, 4);
         char* recvBuffer = new char[recvLength];
         iResult = recv(clientSock, recvBuffer, recvLength, 0);
         if (iResult > 0)
@@ -263,17 +270,24 @@ int main(int argc, char** argv)
             std::cout << "got " << iResult << " bytes\n";
             if (iResult != recvLength)
             {
-                std::cout << "didnt get the right amount, got " << iResult << "\n";
+                std::cout << "didnt get the right amount, got " << iResult << ", wanted " << recvLength << "\n";
                 //todo
             }
             else
             {
                 std::cout << "got the goods (" << iResult << ")\n";
-                char* outputBuffer;
-                int strawberryLength = strawberryize(&detector, &shapePredictor, &strawberryR, recvBuffer, outputBuffer + 4);
-                int outputBufferLength = strawberryLength + 4;
-                memset(outputBuffer, strawberryLength, 4);
-                iResult = send(clientSock, outputBuffer, outputBufferLength, 0);
+                char* strawberryBuffer = nullptr;
+                int strawberryBufferSize = strawberryize(&detector, &shapePredictor, &strawberryR, recvBuffer, recvLength, &strawberryBuffer);
+
+                int outputBufferSize = 4 + strawberryBufferSize;
+                char* outputBuffer = new char[outputBufferSize];
+                memcpy(outputBuffer, &strawberryBufferSize, 4);
+                memcpy(outputBuffer + 4, strawberryBuffer, strawberryBufferSize);
+                //delete[] strawberryBuffer;//todo dangerous????
+                int aa = 0;
+                memcpy(&aa, outputBuffer, 4);
+                std::cout << "gamer gamer gamer target: " << strawberryBufferSize << ", test: " << aa << "\n";
+                iResult = send(clientSock, outputBuffer, outputBufferSize, 0);
                 if (iResult == SOCKET_ERROR)
                 {
                     std::cout << "send failed " << WSAGetLastError();
@@ -283,7 +297,7 @@ int main(int argc, char** argv)
                 }
                 else
                 {
-                    std::cout << "sent " << iResult << " bytes (file is " << outputBufferLength << " bytes long + 4 bytes overhead\n";
+                    std::cout << "sent " << iResult << " bytes (file is " << strawberryBufferSize << " bytes long + 4 bytes overhead\n";
                 }
                 //delete[] outputBuffer;//is this dangerous or somethinhg because its allocated in another method also necessary becasue scope?
             }
