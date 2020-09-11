@@ -127,7 +127,6 @@ int strawberryize(dlib::frontal_face_detector* detector, dlib::shape_predictor* 
         }
         std::cout << "left: " << xOffset << ", down: " << yOffset << ", width: " << c.width << ", height: " << c.height << std::endl;
         strawberryRotate(c).copyTo(strawberry(cv::Rect(xOffset, yOffset, c.width, c.height)));
-
         cv::bitwise_xor(strawberry, mask, strawberry);
 
         cv::Mat result(input.rows, input.cols, CV_8UC3);
@@ -145,7 +144,7 @@ int strawberryize(dlib::frontal_face_detector* detector, dlib::shape_predictor* 
             }
         }
         std::vector<unsigned char> outputVector;
-        cv::imencode(".jpg", strawberry, outputVector);
+        cv::imencode(".jpg", result, outputVector);
         *outputBuffer = new char[outputVector.size()];
         memcpy(*outputBuffer, outputVector.data(), outputVector.size());
         return outputVector.size();
@@ -278,15 +277,23 @@ int main(int argc, char** argv)
                 std::cout << "got the goods (" << iResult << ")\n";
                 char* strawberryBuffer = nullptr;
                 int strawberryBufferSize = strawberryize(&detector, &shapePredictor, &strawberryR, recvBuffer, recvLength, &strawberryBuffer);
-
-                int outputBufferSize = 4 + strawberryBufferSize;
-                char* outputBuffer = new char[outputBufferSize];
-                memcpy(outputBuffer, &strawberryBufferSize, 4);
-                memcpy(outputBuffer + 4, strawberryBuffer, strawberryBufferSize);
-                //delete[] strawberryBuffer;//todo dangerous????
-                int aa = 0;
-                memcpy(&aa, outputBuffer, 4);
-                std::cout << "gamer gamer gamer target: " << strawberryBufferSize << ", test: " << aa << "\n";
+                char* outputBuffer;
+                int outputBufferSize;
+                if (strawberryBufferSize == 0)
+                {
+                    outputBufferSize = 4;
+                    outputBuffer = new char[4];
+                    int a = 0;
+                    memcpy(outputBuffer, &a, 4);//memset instead???
+                }
+                else
+                {
+                    outputBufferSize = 4 + strawberryBufferSize;
+                    outputBuffer = new char[outputBufferSize];
+                    memcpy(outputBuffer, &strawberryBufferSize, 4);
+                    memcpy(outputBuffer + 4, strawberryBuffer, strawberryBufferSize);
+                    //delete[] strawberryBuffer;//todo dangerous????
+                }
                 iResult = send(clientSock, outputBuffer, outputBufferSize, 0);
                 if (iResult == SOCKET_ERROR)
                 {
