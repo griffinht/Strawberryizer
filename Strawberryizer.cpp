@@ -257,6 +257,10 @@ int main(int argc, char** argv)
 
     char recvLengthBuffer[4];//todo just make int?
     iResult = recv(clientSock, recvLengthBuffer, 4, 0);
+    std::ofstream ofs;
+    ofs.open("out.txt", std::ios::binary | std::ios::out);
+    ofs.write(recvLengthBuffer, 4);
+    ofs.close();
     if (iResult > 0)
     {
         std::cout << "got " << iResult << "bytes \n";
