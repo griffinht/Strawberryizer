@@ -4,6 +4,8 @@
     <ClCompile Include="Strawberryizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ServerSocket.cpp" />
+    <ClCompile Include="Socket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\Griffin\dlib\examples\CMakeLists.txt" />
@@ -12,5 +14,9 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{BD55EF35-9E3E-3F34-83BE-462972730E4D}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ServerSocket.h" />
+    <ClInclude Include="Socket.h" />
   </ItemGroup>
 </Project>

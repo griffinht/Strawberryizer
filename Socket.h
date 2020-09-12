@@ -7,13 +7,13 @@ class Socket
 {
 public:
 	Socket(std::string addr, int port);
+	Socket(SOCKET sock);
 	~Socket();
-	int connect();
 	int send(char* buffer, int bufferLength);
 	int recv(char* buffer, int bufferLength);
 private:
-	WSADATA wsaData;
+	int connect(struct addrinfo* result);
+private:
 	bool wsaStarted;
 	SOCKET sock = INVALID_SOCKET;
-	struct addrinfo* result = 0;
 };

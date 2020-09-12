@@ -1,6 +1,4 @@
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#pragma comment(lib, "wS2_32.lib")
+#include "ServerSocket.h"
 
 #include <dlib/image_processing/frontal_face_detector.h>
 #include <dlib/image_processing/render_face_detections.h>
@@ -176,8 +174,7 @@ void loadDlib(dlib::frontal_face_detector* detector, dlib::shape_predictor* shap
     }
 }
 
-#define HOST "localhost"
-#define PORT "69"
+#define PORT 69
 #define STRAWBERRRY_ROTATE_PNG "strawberry.png"
 
 int main(int argc, char** argv)
@@ -190,84 +187,19 @@ int main(int argc, char** argv)
     std::cout << "Loaded " << STRAWBERRRY_ROTATE_PNG << "\n";
     std::cout << "Initializing network stuff\n";
 
-    WSADATA wsaData;
-    int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-    if (iResult != 0) {
-        std::cout << stderr << "WSAStartup machine broke" << iResult << "\n";
-        return 1;
-    }
-
-    struct addrinfo *result = 0, hints;
-    memset(&hints, 0, sizeof(hints));
-
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = IPPROTO_TCP;
-    hints.ai_flags = AI_PASSIVE;
-    //todo necessary?
-    iResult = getaddrinfo(NULL, PORT, &hints, &result);
-    if (iResult != 0) {
-        std::cout << "getaddrinfo failed with error" << iResult << "\n";
-        WSACleanup();
-        return 1;
-    }
-
-    SOCKET sock = INVALID_SOCKET;
-    sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
-    if (sock == INVALID_SOCKET)
-    {
-        std::cout << "error opening socket" << WSAGetLastError();
-        freeaddrinfo(result);
-        WSACleanup();
-        return 1;
-    }
-
-    iResult = bind(sock, result->ai_addr ,(int)result->ai_addrlen);
-    if (iResult == SOCKET_ERROR)
-    {
-        std::cout << "couldnt bind to port " << PORT << ", got " << WSAGetLastError();
-        freeaddrinfo(result);
-        closesocket(sock);
-        WSACleanup();
-        return 1;
-    }
-
-    freeaddrinfo(result);
-
-    iResult = listen(sock, SOMAXCONN);
-    if (iResult == SOCKET_ERROR)
-    {
-        std::cout << "listen failed with " << WSAGetLastError();
-        closesocket(sock);
-        WSACleanup();
-        return 1;
-    }
-
-    SOCKET clientSock = INVALID_SOCKET;
-    clientSock = accept(sock, NULL, NULL);
-    if (clientSock == INVALID_SOCKET)
-    {
-        std::cout << "couldnt accept connection " << WSAGetLastError();
-        closesocket(sock);
-        WSACleanup();
-        return 1;
-    }
-
-    closesocket(sock);
+    ServerSocket socket(PORT);
+    Socket clientSocket = socket.listen();
+    //destruct server socket
 
     char recvLengthBuffer[4];//todo just make int?
-    iResult = recv(clientSock, recvLengthBuffer, 4, 0);
-    std::ofstream ofs;
-    ofs.open("out.txt", std::ios::binary | std::ios::out);
-    ofs.write(recvLengthBuffer, 4);
-    ofs.close();
+    int iResult = clientSocket.recv(recvLengthBuffer, 4);
     if (iResult > 0)
     {
         std::cout << "got " << iResult << "bytes \n";
         int recvLength;
         memcpy(&recvLength, recvLengthBuffer, 4);
         char* recvBuffer = new char[recvLength];
-        iResult = recv(clientSock, recvBuffer, recvLength, 0);
+        iResult = clientSocket.recv(recvBuffer, recvLength);
         if (iResult > 0)
         {
             std::cout << "got " << iResult << " bytes\n";
@@ -298,12 +230,10 @@ int main(int argc, char** argv)
                     memcpy(outputBuffer + 4, strawberryBuffer, strawberryBufferSize);
                     //delete[] strawberryBuffer;//todo dangerous????
                 }
-                iResult = send(clientSock, outputBuffer, outputBufferSize, 0);
+                iResult = clientSocket.send(outputBuffer, outputBufferSize);
                 if (iResult == SOCKET_ERROR)
                 {
                     std::cout << "send failed " << WSAGetLastError();
-                    closesocket(sock);
-                    WSACleanup();
                     return 1;
                 }
                 else
@@ -326,22 +256,5 @@ int main(int argc, char** argv)
     {
         std::cout << "closing" << std::endl;
     }
-    else 
-    {
-        std::cout << "recv failed " << WSAGetLastError();
-        closesocket(clientSock);
-        WSACleanup();
-        return 1;
-    }
-
-    iResult = shutdown(clientSock, SD_SEND);
-    if (iResult == SOCKET_ERROR)
-    {
-        std::cout << "shutdown failed " << WSAGetLastError();
-        closesocket(clientSock);
-        WSACleanup();
-        return 1;
-    }
-
-    closesocket(clientSock);
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 }

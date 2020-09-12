@@ -13,15 +13,16 @@
 
 Socket::Socket(std::string addr, int port)
 {
+    WSADATA wsaData;
     int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
         std::cout << stderr << "WSAStartup machine broke " << iResult << std::endl;
-        wsaStarted = false;
+        wsaStarted = false;//todo unecessary
         //todo make sure this never happens lol
     }
     else
     {
-        wsaStarted = true;
+        wsaStarted = true;//todo change
         struct addrinfo hints;
 
         memset(&hints, 0, sizeof(hints));//is this necessary
@@ -29,12 +30,20 @@ Socket::Socket(std::string addr, int port)
         hints.ai_socktype = SOCK_STREAM;
         hints.ai_protocol = IPPROTO_TCP;
 
+        struct addrinfo* result = 0;
         iResult = getaddrinfo(addr.c_str(), std::to_string(port).c_str(), &hints, &result);
         if (iResult != 0)
         {
             std::cout << "getaddrinfo failed with error " << iResult << "\n";
         }
+        connect(result);
     }
+}
+
+Socket::Socket(SOCKET sock)
+{
+    wsaStarted = true;
+    this->sock = sock;
 }
 
 Socket::~Socket()
@@ -50,7 +59,7 @@ Socket::~Socket()
     }
 }
 
-int Socket::connect()
+int Socket::connect(struct addrinfo* result)
 {
     sock = INVALID_SOCKET;
     int attempts = 0;
@@ -86,19 +95,20 @@ int Socket::connect()
     }
 
     freeaddrinfo(result);
-    std::cout << "probably connected to server\n";//todo timer
+    std::cout << "probably connected to server\n";//todo 
     return 0;
 }
 int Socket::send(char* buffer, int bufferLength)
 {
+    std::cout << "sending " << bufferLength << "bytes \n";
     int iResult = ::send(sock, buffer, bufferLength, 0);
     if (iResult == SOCKET_ERROR)
     {
         std::cout << "send failed " << WSAGetLastError();
-        closesocket(sock);
+        closesocket(sock);//todo
         return 1;
     }
-    return 0;
+    return iResult;
 }
 
 int Socket::recv(char* buffer, int bufferLength)
@@ -106,7 +116,7 @@ int Socket::recv(char* buffer, int bufferLength)
     int iResult = ::recv(sock, buffer, bufferLength, 0);
     if (iResult > 0)
     {
-
+        std::cout << "recv " << iResult << "\n";
     }
     else if (iResult == 0)
     {

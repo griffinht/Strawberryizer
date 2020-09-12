@@ -21,9 +21,9 @@ int main()
     ifs.close();
     
     Socket sock(HOST, PORT);
-    sock.connect();
+
     sock.send(buffer, 4 + fSize);
-    delete[] buffer;
+    //delete[] buffer;
 
     char recvLengthBuffer[4];
     int length = sock.recv(recvLengthBuffer, 4);
@@ -39,7 +39,7 @@ int main()
         {
             int recvLength = 0;
             memcpy(&recvLength, recvLengthBuffer, 4);
-            std::cout << (int) recvLengthBuffer[0] << ", " << (int)recvLengthBuffer[1] << ", " << (int)recvLengthBuffer[2] << ", " << (int)recvLengthBuffer[3] << ",,, " << (int)*recvLengthBuffer << "\n";
+            std::cout << recvLength << "\n";
             char *recvBuffer = new char[recvLength];//todo bounds checking in case of corruption or something
             length = sock.recv(recvBuffer, recvLength);
             if (length > 0)
