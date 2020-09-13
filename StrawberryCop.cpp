@@ -12,7 +12,7 @@ int main()
     std::cout << "Starting StrawberryCop...\n";
 
     std::ifstream ifs;
-    ifs.open("testImages/in/david500.jpg", std::ios::in | std::ios::binary | std::ios::ate);//todo error checking
+    ifs.open("testImages/in/tromp.jpg", std::ios::in | std::ios::binary | std::ios::ate);//todo error checking
     int fSize = ifs.tellg();
     ifs.seekg(0);
     char* buffer = new char[4 + fSize];
