@@ -89,7 +89,56 @@ int strawberryize(dlib::frontal_face_detector* detector, dlib::shape_predictor* 
         int xO = strawberryRotate.cols / 2 - (*strawberryR).cols / 2;
         int yO = strawberryRotate.rows / 2 - (*strawberryR).rows / 2;
         cv::Rect a(xO, yO, (*strawberryR).cols, (*strawberryR).rows);
-        (*strawberryR).copyTo(strawberryRotate(a));
+        cv::Rect b(0, 0, (*strawberryR).cols, (*strawberryR).rows);
+        if (a.x < 0)
+        {
+            b.x -= a.x;
+            b.width += a.x;
+            a.x = 0;
+            if (b.x + b.width > (*strawberryR).cols)
+            {
+                b.width -= (b.x + b.width) - (*strawberryR).cols;
+            }
+            a.width = b.width;
+        }
+        if (a.y < 0)
+        {
+            b.y -= a.y;
+            b.height += a.y;
+            a.y = 0;
+            if (b.y + b.height > (*strawberryR).rows)
+            {
+                b.height -= (b.y + b.height) - (*strawberryR).rows;
+            }
+            a.height = b.height;
+        }
+        /*
+        if (b.x + b.width > (*strawberryR).cols)
+        {
+            int c = (b.x + b.width) - (*strawberryR).cols;
+            b.width -= c;
+            a.width += c;
+        }
+        if (b.x + b.height > (*strawberryR).rows)
+        {
+            int c = (b.x + b.height) - (*strawberryR).rows;
+            b.height -= c;
+            a.height += c;
+        }
+        */
+        if (a.x + a.width > strawberryRotate.cols)
+        {
+            int c = (a.x + a.width) - strawberryRotate.cols;
+            a.width -= c;
+            b.width = a.width;
+        }
+        if (a.x + a.height > strawberryRotate.rows)
+        {
+            int c = (a.x + a.height) - strawberryRotate.rows;
+            a.height -= c;
+            b.height = a.height;
+        }
+        (*strawberryR)(b).copyTo(strawberryRotate(a));
         cv::warpAffine(strawberryRotate, strawberryRotate, cv::getRotationMatrix2D(cv::Point2f(strawberryRotate.cols / 2, strawberryRotate.rows / 2), angle, 1.0), strawberryRotate.size());
         cv::Mat strawberry(mask.size(), mask.type(), cv::Scalar(0, 0, 0, 0));
         int xOffset = x - strawberry.cols / 2;
